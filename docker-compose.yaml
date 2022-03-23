@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongodb
+    restart: always
+    volumes:
+      - mongodb:/data/db
+    environment:
+      - MONGO_USERNAME=ADMIN
+      - MONGO_PASSWORD=ADMIN
+      - MONGO_DATABASE=dbAPI
+    ports:
+      - 27017:27017
+  api:
+    image: node-16
+    container_name: api-node
+    restart: always
+    ports:
+      - "3333:3333"
+    build: .
+    command: npm run dev
+    volumes:
+      - .:/usr/app
+    environment:
+      - PORT=3333
+      - DB_USER=ADMIN
+      - DB_PASS=ADMIN
+      - DB_PORT=27017
+      - DB_NAME=dbAPI
+      - DB_HOST=mongo  
+    depends_on:
+      - mongo
+volumes:
+  mongodb:
+
+
+      

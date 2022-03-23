@@ -1,0 +1,22 @@
+{
+  "name": "api-solid-tdd",
+  "version": "1.0.0",
+  "description": "![tdd_clean_code](https://bs-uploads.toptal.io/blackfish-uploads/components/seo/content/og_image_file/og_image/777184/secure-rest-api-in-nodejs-18f43b3033c239da5d2525cfd9fdc98f.png)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/express": "^4.17.13",
+    "@types/jest": "^27.4.1",
+    "@types/mongoose": "^5.11.97",
+    "express": "^4.17.3",
+    "jest": "^27.5.1",
+    "mongoose": "^6.2.7",
+    "nodemon": "^2.0.15",
+    "ts-node": "^10.7.0"
+  }
+}
