@@ -8,8 +8,8 @@ services:
     volumes:
       - mongodb:/data/db
     environment:
-      - MONGO_USERNAME=ADMIN
-      - MONGO_PASSWORD=ADMIN
+      - MONGO_USERNAME=admin
+      - MONGO_PASSWORD=admin
       - MONGO_DATABASE=dbAPI
     ports:
       - 27017:27017
@@ -25,8 +25,8 @@ services:
       - .:/usr/app
     environment:
       - PORT=3333
-      - DB_USER=ADMIN
-      - DB_PASS=ADMIN
+      - DB_USER=admin
+      - DB_PASS=admin
       - DB_PORT=27017
       - DB_NAME=dbAPI
       - DB_HOST=mongo  
