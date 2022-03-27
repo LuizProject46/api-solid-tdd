@@ -9,4 +9,4 @@ routes.get('/ping', (request: Request, response: Response) => {
 })
 
 
-export default routes
+export { routes }
