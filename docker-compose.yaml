@@ -1,18 +1,6 @@
 version: '3.8'
 
 services:
-  mongo:
-    image: mongo:latest
-    container_name: mongodb
-    restart: always
-    volumes:
-      - mongodb:/data/db
-    environment:
-      - MONGO_USERNAME=admin
-      - MONGO_PASSWORD=admin
-      - MONGO_DATABASE=dbAPI
-    ports:
-      - 27017:27017
   api:
     image: node-16
     container_name: api-node
@@ -25,15 +13,7 @@ services:
       - .:/usr/app
     environment:
       - PORT=3333
-      - DB_USER=admin
-      - DB_PASS=admin
-      - DB_PORT=27017
-      - DB_NAME=dbAPI
-      - DB_HOST=mongo  
-    depends_on:
-      - mongo
-volumes:
-  mongodb:
+      - MONGO_URL=mongodb+srv://louisdev46:oitFG1cOREindeFF@cluster0.wjwd4.mongodb.net/myFirstDatabase?retryWrites=true&w=majority 
 
 
       

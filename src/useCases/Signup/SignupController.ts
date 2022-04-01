@@ -1,16 +1,16 @@
 import { Request, Response } from "express";
-import { CreateUserUseCases } from "./CreateUserUseCase";
+import { SignupUseCases } from "./SignupUseCase";
 
-export class CreateUserController{
-    private createUserUseCases : CreateUserUseCases;
-    constructor(createUserUseCase : CreateUserUseCases){
-        this.createUserUseCases = createUserUseCase;
+export class SignupController{
+    private signupUseCases : SignupUseCases;
+    constructor(signupUseCase : SignupUseCases){
+        this.signupUseCases = signupUseCase;
     }
     async execute(request: Request, response: Response) : Promise<Response>{
         const {name, email, password, avatar} = request.body;
 
         try{
-            await this.createUserUseCases.execute({
+            await this.signupUseCases.execute({
                 name,
                 email, 
                 password,

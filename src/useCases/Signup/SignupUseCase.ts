@@ -1,9 +1,9 @@
 import { User } from "../../entities/User";
 import { IMailProvider } from "../../providers/Email/IMailProvider";
 import { IUsersRepository } from "../../repositories/Users/IUsersRepository";
-import { CreateUserRequestDTO } from "./CreateUserDTO";
+import { SignupRequestDTO } from "./SignupDTO";
 
-export class CreateUserUseCases {
+export class SignupUseCases {
 
     private usersRepository: IUsersRepository;
     private mailProvider : IMailProvider;
@@ -16,7 +16,7 @@ export class CreateUserUseCases {
         this.mailProvider = mailProvider;
     }
 
-    async execute(data: CreateUserRequestDTO){
+    async execute(data: SignupRequestDTO){
 
         const userAlreadyExists = await this.usersRepository.findByEmail(data.email);
 
@@ -28,7 +28,7 @@ export class CreateUserUseCases {
 
         await this.usersRepository.save(user);
 
-        this.mailProvider.sendMail({
+        await this.mailProvider.sendMail({
             to: {
                 name : data.name,
                 email: data.email
