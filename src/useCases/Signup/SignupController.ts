@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { SignupUseCases } from "./SignupUseCase";
+import bcryptjs from 'bcryptjs'
 
 export class SignupController{
     private signupUseCases : SignupUseCases;
@@ -7,19 +8,23 @@ export class SignupController{
         this.signupUseCases = signupUseCase;
     }
     async execute(request: Request, response: Response) : Promise<Response>{
-        const {name, email, password, avatar} = request.body;
+        const {name, email, password} = request.body;
+        const image = request.file as Express.Multer.File
 
-        try{
-            await this.signupUseCases.execute({
+        try{ 
+
+            const passwordEncoded = await bcryptjs.hash(password, 10)         
+
+           const user =  await this.signupUseCases.execute({
                 name,
                 email, 
-                password,
-                avatar
+                password: passwordEncoded,
+                avatar: image.filename
             })
-    
-            return response.status(201).send({
-                message: "User was created!"
-            })
+            
+ 
+            return response.status(201).send(user)
+
         }catch(err: any){
             return response.status(400).send({
                 message: err.message || "Unexpected Error"

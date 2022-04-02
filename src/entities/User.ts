@@ -16,6 +16,7 @@ export class User {
         this.email = props.email;
         this.password = props.password;
         this.avatar = props.avatar;
+        this.avatar = props.avatar;
 
         if(!id){
             this.id = uuid();

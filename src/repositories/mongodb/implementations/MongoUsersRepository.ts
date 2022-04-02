@@ -2,6 +2,7 @@ import { ObjectId } from "mongodb";
 import { User } from "../../../entities/User";
 import { IUsersRepository } from "../../Users/IUsersRepository";
 import { MongoHelper } from "../helpers/mongo-helper";
+import bcryptjs from 'bcryptjs'
 
 interface IMongoUser {   
     _id: ObjectId
@@ -39,13 +40,21 @@ export class MongoUsersRepository implements IUsersRepository{
         const userCollection = await MongoHelper.getCollection('users')
 
         const user = await userCollection.findOne<IMongoUser>({
-            email,
-            password
+            email       
         })
 
         if(user){
-            return user
+            const passwordEncoded = user.password
+
+            const isValid = await bcryptjs.compare(password, passwordEncoded)
+
+            if(isValid){
+                return user
+            }
+
+            return null
         }
+
         return null
     }
 }

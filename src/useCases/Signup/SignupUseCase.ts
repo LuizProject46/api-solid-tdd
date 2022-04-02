@@ -2,6 +2,15 @@ import { User } from "../../entities/User";
 import { IMailProvider } from "../../providers/Email/IMailProvider";
 import { IUsersRepository } from "../../repositories/Users/IUsersRepository";
 import { SignupRequestDTO } from "./SignupDTO";
+import jtw from 'jsonwebtoken'
+
+interface IUserLogged {
+    id: string | undefined
+    name: string
+    email: string
+    avatar: string
+    token: string
+}
 
 export class SignupUseCases {
 
@@ -16,9 +25,10 @@ export class SignupUseCases {
         this.mailProvider = mailProvider;
     }
 
-    async execute(data: SignupRequestDTO){
+    async execute(data: SignupRequestDTO): Promise<IUserLogged>{
 
         const userAlreadyExists = await this.usersRepository.findByEmail(data.email);
+        const secret = process.env.JWT_SECRET || ""
 
         if(userAlreadyExists){
             throw new Error('User already exists.');
@@ -40,6 +50,22 @@ export class SignupUseCases {
             subject: "Cadastro realizado",
             body: "Olá, você foi cadastrado com sucesso!"
         })
+
+        const token = jtw.sign({
+            userId: user.id,
+            name: user.name,               
+        }, secret, {
+            algorithm : "HS256",
+            expiresIn: '1h'
+        })
+
+        return  { 
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            avatar: user.avatar,   
+            token
+        }
 
     }
 }

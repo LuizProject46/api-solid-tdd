@@ -11,9 +11,8 @@ services:
     command: npm run dev
     volumes:
       - .:/usr/app
-    environment:
-      - PORT=3333
-      - MONGO_URL=mongodb+srv://louisdev46:oitFG1cOREindeFF@cluster0.wjwd4.mongodb.net/myFirstDatabase?retryWrites=true&w=majority 
+    env_file:
+      - .env
 
 
       
